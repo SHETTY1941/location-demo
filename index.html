@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Location Sharing Demo</title>
+</head>
+<body>
+
+<h2>Location Sharing Demo</h2>
+
+<button onclick="shareLocation()">Share My Location</button>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAc6kd76Iw54N041Nyf5ezVecxgo8AbWGA",
+  authDomain: "locationdemo-f8ba4.firebaseapp.com",
+  projectId: "locationdemo-f8ba4",
+  storageBucket: "locationdemo-f8ba4.firebasestorage.app",
+  messagingSenderId: "501022300080",
+  appId: "1:501022300080:web:2e7b791721b4dab5c22875",
+  measurementId: "G-3TQ7RHSKW0",
+  databaseURL: "https://locationdemo-f8ba4-default-rtdb.asia-southeast1.firebasedatabase.app/"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+window.shareLocation = function () {
+    navigator.geolocation.getCurrentPosition((position) => {
+
+        set(ref(db, "hr_location"), {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            time: new Date().toLocaleString()
+        });
+
+        alert("Location shared successfully!");
+    });
+};
+</script>
+
+</body>
+</html>

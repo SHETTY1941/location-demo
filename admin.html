@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+<h2>HR Location</h2>
+
+<p id="output">Waiting for location...</p>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAc6kd76Iw54N041Nyf5ezVecxgo8AbWGA",
+  authDomain: "locationdemo-f8ba4.firebaseapp.com",
+  projectId: "locationdemo-f8ba4",
+  storageBucket: "locationdemo-f8ba4.firebasestorage.app",
+  messagingSenderId: "501022300080",
+  appId: "1:501022300080:web:2e7b791721b4dab5c22875",
+  measurementId: "G-3TQ7RHSKW0",
+  databaseURL: "https://locationdemo-f8ba4-default-rtdb.asia-southeast1.firebasedatabase.app/"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+onValue(ref(db, "hr_location"), (snapshot) => {
+    const data = snapshot.val();
+
+    if (data) {
+        document.getElementById("output").innerHTML =
+            "Latitude: " + data.latitude +
+            "<br>Longitude: " + data.longitude +
+            "<br>Time: " + data.time;
+    }
+});
+</script>
+
+</body>
+</html>
