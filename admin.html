@@ -7,21 +7,24 @@
 
 <h2>HR Location</h2>
 
-<p id="output">Waiting for location...</p>
+<div id="output">
+    Waiting for location...
+</div>
 
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAc6kd76Iw54N041Nyf5ezVecxgo8AbWGA",
-  authDomain: "locationdemo-f8ba4.firebaseapp.com",
-  projectId: "locationdemo-f8ba4",
-  storageBucket: "locationdemo-f8ba4.firebasestorage.app",
-  messagingSenderId: "501022300080",
-  appId: "1:501022300080:web:2e7b791721b4dab5c22875",
-  measurementId: "G-3TQ7RHSKW0",
-  databaseURL: "https://locationdemo-f8ba4-default-rtdb.asia-southeast1.firebasedatabase.app/"
+  apiKey: "AIzaSyCd4uN1sz1EuLH5_jFpOHIglXyz7H_BdlA",
+  authDomain: "location-demo-2ae1e.firebaseapp.com",
+  projectId: "location-demo-2ae1e",
+  storageBucket: "location-demo-2ae1e.firebasestorage.app",
+  messagingSenderId: "168093712387",
+  appId: "1:168093712387:web:835fe973df364274b4ce36",
+  measurementId: "G-TDFJNXXFP9",
+  databaseURL: "https://location-demo-2ae1e-default-rtdb.firebaseio.com/"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -52,6 +55,8 @@ onValue(ref(db, "hr_location"), (snapshot) => {
 
         <b>Longitude:</b> ${data.longitude}<br><br>
 
+        <b>Accuracy:</b> ${Math.round(data.accuracy)} meters<br><br>
+
         <b>Time:</b> ${data.time}<br><br>
 
         <a href="${data.mapLink}" target="_blank">
@@ -61,6 +66,7 @@ onValue(ref(db, "hr_location"), (snapshot) => {
     }
 
 });
+
 </script>
 
 </body>
