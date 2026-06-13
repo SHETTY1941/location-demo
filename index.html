@@ -36,7 +36,7 @@ window.shareLocation = async function () {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
 
-        // Reverse geocoding
+        // Reverse Geocoding
         const response = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
         );
@@ -51,6 +51,10 @@ window.shareLocation = async function () {
 
         const state = data.address.state || "";
         const country = data.address.country || "";
+        const suburb = data.address.suburb || "";
+        const neighbourhood = data.address.neighbourhood || "";
+        const road = data.address.road || "";
+        const postcode = data.address.postcode || "";
 
         const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
 
@@ -60,12 +64,19 @@ window.shareLocation = async function () {
             city: city,
             state: state,
             country: country,
+            suburb: suburb,
+            neighbourhood: neighbourhood,
+            road: road,
+            postcode: postcode,
             mapLink: mapLink,
             time: new Date().toLocaleString()
         });
 
         alert("Location shared successfully!");
 
+    }, (error) => {
+        alert("Location permission denied.");
+        console.log(error);
     });
 
 };
