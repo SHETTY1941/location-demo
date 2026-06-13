@@ -28,14 +28,30 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 onValue(ref(db, "hr_location"), (snapshot) => {
+
     const data = snapshot.val();
 
     if (data) {
-        document.getElementById("output").innerHTML =
-            "Latitude: " + data.latitude +
-            "<br>Longitude: " + data.longitude +
-            "<br>Time: " + data.time;
+
+        document.getElementById("output").innerHTML = `
+            <b>City:</b> ${data.city}<br><br>
+
+            <b>State:</b> ${data.state}<br><br>
+
+            <b>Country:</b> ${data.country}<br><br>
+
+            <b>Latitude:</b> ${data.latitude}<br><br>
+
+            <b>Longitude:</b> ${data.longitude}<br><br>
+
+            <b>Time:</b> ${data.time}<br><br>
+
+            <a href="${data.mapLink}" target="_blank">
+                Open Location in Google Maps
+            </a>
+        `;
     }
+
 });
 </script>
 

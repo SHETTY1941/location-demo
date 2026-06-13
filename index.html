@@ -29,17 +29,45 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-window.shareLocation = function () {
-    navigator.geolocation.getCurrentPosition((position) => {
+window.shareLocation = async function () {
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        // Reverse geocoding
+        const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+        );
+
+        const data = await response.json();
+
+        const city =
+            data.address.city ||
+            data.address.town ||
+            data.address.village ||
+            "Unknown";
+
+        const state = data.address.state || "";
+        const country = data.address.country || "";
+
+        const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
 
         set(ref(db, "hr_location"), {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
+            latitude: lat,
+            longitude: lon,
+            city: city,
+            state: state,
+            country: country,
+            mapLink: mapLink,
             time: new Date().toLocaleString()
         });
 
         alert("Location shared successfully!");
+
     });
+
 };
 </script>
 
